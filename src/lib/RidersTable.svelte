@@ -3,34 +3,51 @@
 	import { createSvelteTable, getCoreRowModel, type Table } from '@tanstack/svelte-table';
 	import type { ColumnDef, TableOptions } from '@tanstack/table-core/src/types';
 	import type { Readable } from 'svelte/store';
-	import { Class } from '$lib/types';
+	import { Rider } from '$lib/types';
 	import SortableTable from './SortableTable.svelte';
 
-	export let division_id: number;
-
-	const columns: ColumnDef<Class>[] = [
+	const columns: ColumnDef<Rider>[] = [
 		{
 			accessorKey: 'name',
 			cell: (info) => info.getValue(),
 			header: () => 'Name'
+		},
+		{
+			accessorKey: 'email',
+			cell: (info) => info.getValue(),
+			header: () => 'Email'
+		},
+		{
+			accessorKey: 'membership_date',
+			// TODO: Make sure the membership date is less than 1 year old as well
+			cell: (info) => {
+				let val = info.getValue<Date>();
+				return val ? val.toLocaleDateString() : 'Not a member';
+			},
+			header: () => 'Membership Date'
+		},
+		{
+			accessorKey: 'phone',
+			cell: (info) => info.getValue(),
+			header: () => 'Phone'
 		}
 	];
 
-	let table_data: Readable<Table<Class>>;
+	let table_data: Readable<Table<Rider>>;
 
 	async function getClasses(): Promise<void> {
-		let raw = await invoke<object[]>('list_classes_for_division', {
-			division: division_id
-		}).catch((err: string) => {
+		let raw = await invoke<object[]>('list_riders').catch((err: string) => {
 			// TODO: Actually send this to an error toast
 			console.error(err);
 		});
 
 		let data = raw?.map((cls) => {
-			return new Class(cls);
+			return new Rider(cls);
 		});
 
-		let options: TableOptions<Class> = {
+		console.log(data);
+
+		let options: TableOptions<Rider> = {
 			data: data ?? [],
 			columns: columns,
 			getCoreRowModel: getCoreRowModel()

@@ -38,6 +38,7 @@ diesel::table! {
         class_id -> Integer,
         placing -> Nullable<Integer>,
         payout -> Nullable<Float>,
+        starting_score -> Integer,
     }
 }
 
@@ -58,7 +59,6 @@ diesel::table! {
     scores (id) {
         id -> Integer,
         result_id -> Integer,
-        starting_score -> Integer,
         content_score -> Nullable<Integer>,
         penalty -> Nullable<Integer>,
         off_pattern -> Nullable<Bool>,

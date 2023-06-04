@@ -119,6 +119,7 @@ CREATE TABLE results (
     class_id INTEGER NOT NULL,
     placing INTEGER,
     payout REAL,
+    starting_score INTEGER NOT NULL,
     FOREIGN KEY (entry_id) REFERENCES entries(id),
     FOREIGN KEY (class_id) REFERENCES classes(id)
 );
@@ -126,7 +127,6 @@ CREATE TABLE results (
 CREATE TABLE scores (
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     result_id INTEGER NOT NULL,
-    starting_score INTEGER NOT NULL,
     content_score INTEGER,
     penalty INTEGER,
     off_pattern BOOLEAN,

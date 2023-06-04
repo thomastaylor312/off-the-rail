@@ -22,6 +22,7 @@ diesel = { version = "2.1", features = ["sqlite", "r2d2", "chrono"]  }
 libsqlite3-sys = { version = "0.26", features = ["bundled"] }
 dirs = "5"
 chrono = { version = "0.4", features = ["serde"] }
+paste = "1"
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem and the built-in dev server is disabled.
